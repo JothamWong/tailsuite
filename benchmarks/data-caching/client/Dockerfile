@@ -16,7 +16,9 @@ RUN buildDeps='curl gcc libc6-dev make' \
 	&& cd /usr/src/memcached/memcached_client \
 	&& make -j $(nproc) \
 	&& chown -R memcache:memcache /usr/src/memcached \
-	&& apt-get purge -y --auto-remove $buildDeps
+	&& apt-get purge -y --auto-remove $buildDeps \
+	&& apt-get update \
+	&& apt-get -y install strace
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
